@@ -53,7 +53,7 @@ for (i in 1:nrow(df)){
           position_df <- position_df + 1
         }
       }
-    else if(substr(row,8,11) == "NODE"){ #if the row is the contig name
+    else if(substr(row,1,6) == "Query="){ #if the row is the contig name
       if(first_node == 0){
         df_final <- data.frame(Contigs = row, Name = genome_ncbi, Lenght = NA, Score = NA, Expect = NA, Identities = NA, Positives = NA, Gaps = NA) #create de final data frame if it is the first Node 
         contig_name <- row
