@@ -60,7 +60,7 @@ for (i in 1:nrow(df)){
         df_final <- data.frame(Contigs = row, Name = genome_ncbi, Lenght = NA, Score = NA, Expect = NA, Identities = NA, Positives = NA, Gaps = NA) #create de final data frame if it is the first Node 
         contig_name <- row
         position_df <- position_df + 1
-    } else { #create a  data frame to be linked to the final one with other Node
+    } else { #create a  data frame to be linked to the final one with another NODE
       df_temp <- data.frame(Contigs = row, Name = genome_ncbi, Lenght = NA, Score = NA, Expect = NA, Identities = NA, Positives = NA, Gaps = NA)
       df_final <- rbind(df_final, df_temp)
       contig_name <- row
