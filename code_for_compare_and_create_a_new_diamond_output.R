@@ -27,7 +27,7 @@ print("Reading input files...")
 x <- read.delim(args[1])
 y <- read.delim(args[2])
 
-if(length(x[,1]) <= length(y[,1])){
+if(length(x[,1]) <= length(y[,1])){ #relocates the largest input
   df <- x
   df2 <- y
 } else{
@@ -46,14 +46,13 @@ hits <- data.frame(NODE = " ", Sequence_1= " ", Sequence_2 = " ", Type = " ")
 library(utils)
 total = nrow(df2)
 
-pb <- txtProgressBar(min = 0, max = total, style = 3)
+pb <- txtProgressBar(min = 0, max = total, style = 3) #progress bar
 while(TRUE){ 
   setTxtProgressBar(pb,i)
-  if(substr(df[i,],1,6) == "Query="){
+  if(substr(df[i,],1,6) == "Query="){ #In case the row being read is from the first data frame
     while (df[i,] != df2[j,]) {
-      iterStatus <- paste(round(100*(i/total),0), "% Complete", sep="")
       setTxtProgressBar(pb,i)
-      j <- j + 1
+      j <- j + 1 #loop through the second data frame until it finds the match
       }
     if(substr(df[i+2,],1,1) == ">" & substr(df2[j+2,],1,1) == ">"){
       if (as.numeric(qdapRegex::ex_between(df[i+4, ], "Score = ", " bits")[[1]]) > as.numeric(qdapRegex::ex_between(df2[j+4, ], "Score = ", " bits")[[1]])){
