@@ -4,7 +4,7 @@ args = commandArgs(trailingOnly=TRUE)
 
 # test if there is at least two argument: if not, return an error
 if (length(args) < 2) {
-  stop("Exactly three arguments must be supplied, including the name of the output last (input file).n", call.=FALSE)
+  stop("Two arguments must be supplied (input file).n", call.=FALSE)
 } 
 
 if(!require(qdapRegex)){
