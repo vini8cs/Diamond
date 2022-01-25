@@ -55,7 +55,9 @@ if(inherits(res2, "try-error")){
 
 cat("Extracting taxonomic data...\n")
 
-taxaId<-taxonomizr::getId(diamond$Taxon,'accessionTaxa.sql')
+blastAccessions <- diamond$NCBI_ID
+
+taxaId<-taxonomizr::accessionToTaxa(blastAccessions,'accessionTaxa.sql')
 
 taxa<-taxonomizr::getTaxonomy(taxaId,'accessionTaxa.sql')
 taxa_df <- as.data.frame(taxa)
