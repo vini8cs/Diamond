@@ -10,15 +10,21 @@ if (length(args)<1) {
 if(!require(taxonomizr)){
   cat("Installing dplyr package...\n")
   install.packages("taxonomizr")
-  
+}
+
 library(taxonomizr)
 
 
 diamond <- read.table(args[1],header = TRUE)
 
-if(!file.exists("accessionTaxa.sql")){
+if(!file.exists("accessionTaxa.sql") & !file.exists("names.dmp") & !file.exists("nodes.dmp")){
   res <- try(taxonomizr::prepareDatabase('accessionTaxa.sql'))
-}
+} else{
+  file.remove("accessionTaxa.sql")
+  file.remove("names.dmp")
+  file.remove("nodes.dmp")
+  res <- try(taxonomizr::prepareDatabase('accessionTaxa.sql'))
+  }
 
 res2 <- try(if(inherits(res, "try-error")){
   if (file.exists("accessionTaxa.sql") | file.exists("names.dmp") | file.exists("nodes.dmp")) {
@@ -28,7 +34,7 @@ res2 <- try(if(inherits(res, "try-error")){
   file.remove("nodes.dmp")
   getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/')
   prepareDatabase('accessionTaxa.sql')
-  }
+  } 
 })
 
 if(inherits(res2, "try-error")){
@@ -37,10 +43,10 @@ if(inherits(res2, "try-error")){
   file.remove("accessionTaxa.sql")
   file.remove("names.dmp")
   file.remove("nodes.dmp")
-  cat("Try to download the two files manually and put in the directory you are using:\n")
+  cat("Try to download the two files manually, put in the directory you are using, and run again:\n")
   cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz\n")
   cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz\n")
-  }
+  } 
 }
 
 cat("Extracting taxonomic data...\n")
