@@ -32,8 +32,8 @@ res2 <- try(if(inherits(res, "try-error")){
   file.remove("accessionTaxa.sql")
   file.remove("names.dmp")
   file.remove("nodes.dmp")
-  getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/')
-  prepareDatabase('accessionTaxa.sql')
+  taxonomizr::getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/')
+  taxonomizr::prepareDatabase('accessionTaxa.sql')
   } 
 })
 
@@ -51,9 +51,9 @@ if(inherits(res2, "try-error")){
 
 cat("Extracting taxonomic data...\n")
 
-taxaId<-getId(diamond$Taxon,'accessionTaxa.sql')
+taxaId<-taxonomizr::getId(diamond$Taxon,'accessionTaxa.sql')
 
-taxa<-getTaxonomy(taxaId,'accessionTaxa.sql')
+taxa<-taxonomizr::getTaxonomy(taxaId,'accessionTaxa.sql')
 taxa_df <- as.data.frame(taxa)
 diamond <- cbind(diamond, taxa_df)
 diamond <- diamond[ , -which(names(diamond) == "species")]
