@@ -46,7 +46,11 @@ if(inherits(res2, "try-error")){
   cat("Try to download the two files manually, put in the directory you are using, and run again:\n")
   cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz\n")
   cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz\n")
-  } 
+  } else {
+    cat("Try to download the two files manually, put in the directory you are using, and run again:\n")
+    cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz\n")
+    cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz\n")
+    }
 }
 
 cat("Extracting taxonomic data...\n")
