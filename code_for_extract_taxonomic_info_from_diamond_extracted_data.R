@@ -32,7 +32,7 @@ res2 <- try(if(inherits(res, "try-error")){
   file.remove("accessionTaxa.sql")
   file.remove("names.dmp")
   file.remove("nodes.dmp")
-  taxonomizr::getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/')
+  taxonomizr::getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/', types='prot')
   taxonomizr::prepareDatabase('accessionTaxa.sql', types='prot')
   } 
 })
@@ -44,19 +44,16 @@ if(inherits(res2, "try-error")){
   file.remove("names.dmp")
   file.remove("nodes.dmp")
   cat("Try to download the two files manually, put in the directory you are using, and run again:\n")
-  cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz\n")
-  cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz\n")
+  cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz\n")
   } else {
     cat("Try to download the two files manually, put in the directory you are using, and run again:\n")
-    cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_wgs.accession2taxid.gz\n")
-    cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/nucl_gb.accession2taxid.gz\n")
+    cat("https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/prot.accession2taxid.gz\n")
     }
 }
 
 cat("Extracting taxonomic data...\n")
 
-blastAccessions <- diamond$NCBI_ID
-
+blastAccessions<-diamond$NCBI_ID
 taxaId<-taxonomizr::accessionToTaxa(blastAccessions,'accessionTaxa.sql')
 
 taxa<-taxonomizr::getTaxonomy(taxaId,'accessionTaxa.sql')
