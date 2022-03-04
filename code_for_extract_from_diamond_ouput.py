@@ -4,7 +4,6 @@
 import sys
 import re
 import pandas as pd
-import sys
 
 def progressbar(it, prefix="", size=60, file=sys.stdout):
     count = len(it)
