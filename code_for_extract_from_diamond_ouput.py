@@ -4,6 +4,7 @@
 import sys
 import re
 import pandas as pd
+import time
 
 def progressbar(it, prefix="", size=60, file=sys.stdout):
     count = len(it)
@@ -18,8 +19,6 @@ def progressbar(it, prefix="", size=60, file=sys.stdout):
     file.write("\n")
     file.flush()
 
-import time
-
 
 if __name__ == "__main__":
     if len(sys.argv[1]) == 0:
@@ -29,7 +28,7 @@ if __name__ == "__main__":
         IN2 = IN.readlines()
 
         i = 0
-        data_temp = { "Contigs": [""],
+        df = { "Contigs": [""],
                 "Length_contig": [""],
                 "Protein_code": [""],
                 "Protein_ID": [""],
@@ -37,7 +36,7 @@ if __name__ == "__main__":
                 "Expect": [""],
                 "Identities": [""]
                 }
-        df = pd.DataFrame(data_temp)
+        df = pd.DataFrame(df)
         for i in progressbar(range(len(IN2)), "Extracting data: ", 30):
             time.sleep(0.1)
             if re.match("(Query= \w+)", IN2[i]):
@@ -52,6 +51,7 @@ if __name__ == "__main__":
                     "Expect": [res[7]],
                     "Identities": [IN2[i+8].split('Identities = ')[1].split(', Positives = ')[0]]
                 }
+                    
                     df_temp = pd.DataFrame(data_temp)
                     df = pd.concat([df, df_temp], axis=0)
                 else:
@@ -66,5 +66,6 @@ if __name__ == "__main__":
                 }
                     df_temp = pd.DataFrame(data_temp)
                     df = pd.concat([df, df_temp], axis=0)
+                    
         
-        df.to_csv('matches_diamond.csv', index=False)
+        df.to_csv('matches_diamond.csv', index=False, sep='\t')
