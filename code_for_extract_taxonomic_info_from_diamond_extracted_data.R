@@ -20,10 +20,7 @@ diamond <- read.table(args[1],header = TRUE)
 if(!file.exists("accessionTaxa.sql") & !file.exists("names.dmp") & !file.exists("nodes.dmp")){
   res <- try(taxonomizr::prepareDatabase('accessionTaxa.sql', types='prot'))
 } else{
-  file.remove("accessionTaxa.sql")
-  file.remove("names.dmp")
-  file.remove("nodes.dmp")
-  res <- try(taxonomizr::prepareDatabase('accessionTaxa.sql', types='prot'))
+  cat("SQL file and associated files already exist")
   }
 
 res2 <- try(if(inherits(res, "try-error")){
@@ -34,8 +31,11 @@ res2 <- try(if(inherits(res, "try-error")){
   file.remove("nodes.dmp")
   taxonomizr::getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/', types='prot')
   taxonomizr::prepareDatabase('accessionTaxa.sql', types='prot')
-  } 
-})
+  } else {
+    taxonomizr::getAccession2taxid(baseUrl='https://ftp.ncbi.nih.gov/pub/taxonomy/accession2taxid/', types='prot')
+    taxonomizr::prepareDatabase('accessionTaxa.sql', types='prot')
+    }
+  })
 
 if(inherits(res2, "try-error")){
   if (file.exists("accessionTaxa.sql") | file.exists("names.dmp") | file.exists("nodes.dmp")) {
